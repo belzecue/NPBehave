@@ -234,11 +234,17 @@ There may be scenarious where you want to have more control. For example you may
 #### Selector
 - **`Selector(params Node[] children)`**: Run children sequentially until one succeeds and succeed (succeeds if one of the children succeeds).
 
-#### Composite
-- **`Sequence(params Node[] children)`**: Run children sequentially until one fails and fail (succeeds if non of the children fails).
+#### Sequence
+- **`Sequence(params Node[] children)`**: Run children sequentially until one fails and fail (succeeds if none of the children fails).
 
 #### Parallel
 - **`Parallel(Policy successPolicy, Policy failurePolicy, params Node[] children)`**: Run children in parallel. When `failurePolocity` is `Polociy.ONE`, the Parallel will stop (with failing resi;t) as soon as one of the children fails. When `successPolicy` is `Policy.ONE`, the Parallel will stop (with succeeding result) when of the children fails. If the Parallel doesn't stop because of a `Policy.ONE` it will execute until all of the children are done, then it either succeeds if all children succeeded or fails.
+
+#### RandomSelector
+- **`RandomSelector(params Node[] children)`**: Run children in random order until one succeeds and succeed (succeeds if one of the children succeeds). Note that for abortion rules the original order defines priorities.
+
+#### RandomSelector
+- **`RandomSequence(params Node[] children)`**: Run children in random order until one fails and fail (succeeds if none of the children fails). Note that for abortion rules the original order defines priorities.
 
 ### Task Nodes
 
@@ -279,6 +285,8 @@ There may be scenarious where you want to have more control. For example you may
 - **`Cooldown(float cooldownTime, float randomVariation, Node decoratee)`**: Run `decoratee` immediately, but only if last execution wasn't at least past `cooldownTime` with `randomVariation`
 - **`Cooldown(float cooldownTime, bool startAfterDecoratee, bool resetOnFailiure, Node decoratee)`**: Run `decoratee` immediately, but only if last execution wasn't at least past `cooldownTime` with `randomVariation`. When `resetOnFailure` is true, the cooldown will be reset if the decorated node fails
 - **`Cooldown(float cooldownTime, float randomVariation, bool startAfterDecoratee, bool resetOnFailiure, Node decoratee)`** Run `decoratee` immediately, but only if last execution wasn't at least past `cooldownTime` with `randomVariation`. When `startAfterDecoratee` is true, the cooldown timer will be started after the decoratee finishes instead of when it starts. When `resetOnFailure` is true, the cooldown will be reset if the decorated node fails.
+- **`Cooldown(float cooldownTime, bool startAfterDecoratee, bool resetOnFailiure, bool failOnCooldown, Node decoratee)`**: Run `decoratee` immediately, but only if last execution wasn't at least past `cooldownTime` with `randomVariation`. When `resetOnFailure` is true, the cooldown will be reset if the decorated node fails. If `failOnCooldown` is true, fail instead of wait in case the cooldown is still active.
+- **`Cooldown(float cooldownTime, float randomVariation, bool startAfterDecoratee, bool failOnCooldown, bool resetOnFailiure, Node decoratee)`** Run `decoratee` immediately, but only if last execution wasn't at least past `cooldownTime` with `randomVariation`. When `startAfterDecoratee` is true, the cooldown timer will be started after the decoratee finishes instead of when it starts. When `resetOnFailure` is true, the cooldown will be reset if the decorated node fails. If `failOnCooldown` is true, fail instead of wait in case the cooldown is still active.
 
 #### Failer
 - **`Failer(Node decoratee)`**: always fail, regardless of the `decoratee`'s result.
@@ -325,12 +333,6 @@ There may be scenarious where you want to have more control. For example you may
 ## Contact
 
 NPBehave was created and is maintained by Nils Kübler (E-Mail: das@nilspferd.net, Skype: disruption@web.de)
-
-### Contributors
-
-* [Nils Kübler](https://github.com/meniku)
-* [Xerios/Sam](https://github.com/Xerios)
-* [MohHeader](https://github.com/MohHEader)
 
 ### Games using NPBehave
 
